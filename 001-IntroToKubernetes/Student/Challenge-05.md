@@ -16,7 +16,7 @@ In this challenge we will cover scale and resiliency from multiple aspects. We'l
 
 * Next, scale the **Web** app to 2 instances
 	- This should be done by modifying the YAML file for the Web app and re-deploying it 
-*  Now, scale the **API** app to 4 instances using the same technique.  
+*  Now, scale the **API** app to 4 instances by using only the kubectl command, which will then be the imperative way.
 * Watch events using kubectl with its special watch option.
    - You will find an error occurs because the cluster does not have enough resources to support that many instances.
    - There are two ways to fix this problem: 
