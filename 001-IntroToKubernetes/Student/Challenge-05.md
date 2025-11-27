@@ -29,6 +29,7 @@ In this challenge we will cover scale and resiliency from multiple aspects. We'l
 	- Keep refreshing to see the API app’s host name keep changing between the deployed instances.
 * Scale the API app back down to 1, and immediately keep refreshing the `/stats.html` page.
 	- You will notice that without any downtime it now directs traffic only to the single instance left.
+* Once done, scale up the AKS cluster to 3 nodes again, from the portal.
 
 ## Success Criteria
 
