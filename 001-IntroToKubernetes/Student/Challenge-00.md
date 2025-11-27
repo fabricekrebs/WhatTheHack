@@ -14,7 +14,14 @@ In this challenge we'll be setting up all the tools we will need to complete our
 
 ### Install Cloud Tools on Your Workstation
 
-- Install the recommended toolset:
+- On your Azure Tenant, deploy a Linux Jumphost with the following settings :
+    - SKU :  Ubuntu Server 24.04 LTS - x64 Gen2
+    - Size : D2s_v3
+    - Authentication type : Password 
+        Enter a username and password you'll remember
+    - Public inbound ports : Allow selected ports (SSH 22)
+    - Connect with SSH to the host, and execute **[jumphost-script.sh](./Resources/Challenge-00/jumphost-script.sh)** once in order to install all prerequisites.
+- Install the recommended toolset on your local computer:
     - Windows Subsystem for Linux
     - Azure CLI 
         - Update to the latest
@@ -22,7 +29,6 @@ In this challenge we'll be setting up all the tools we will need to complete our
         - **NOTE for Windows users:** Install Azure CLI on Windows Subsystem for Linux following the instructions for the Linux distribution you are using in WSL.
         - **NOTE:** If you’re running into issues running Azure CLI command on Windows, disable Global Protect (VPN)
     - Visual Studio Code
-- **NOTE:** You can start the next challenge even if this one is still running by using the Azure Cloud Shell.
 - **Tip:** You can complete almost all of the challenges with the Azure Cloud Shell!  But be a good cloud architect and make sure you have experience installing the tools locally.
 
 ### Student Resources
