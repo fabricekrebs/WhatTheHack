@@ -11,32 +11,70 @@ This is **PATH C**: Use this path if your students understand docker, don't care
 #### Tooling:
 The students will need to be able to run the Azure cli.  Ideally this would be run from their local workstation, but it could also be the Azure Cloud Shell.
 
-#### Fab Medical Application:
-The coach should demonstrate running the application locally.  To run the Fab Medical application locally:
-- Each part of the app (api & web) runs independently.
-- Build the API app by navigating to the content-api folder and run:
-   	- `npm install`
-- To start a node app, run:
-       - `node ./server.js &`
-- Verify the API app runs by browsing to its URL with one of the three function names, eg: 
-   	- `http://localhost:3001/speakers`
-- Repeat for the steps above for the Web app.
-	- **NOTE:** The content-web app expects an environment variable named `CONTENT_API_URL` that points to the API app’s URL.
-	- The environment variable value should be `http://localhost:3001`
-	- **NOTE:** `localhost` only works when both apps are run locally using Node. You will need a different value for the environment variable when running in Docker.
-	- **NOTE:** The node processes for both content-api and content-web must be stopped before attempting to run the docker containers in the next step. To do this, use the Linux `ps` command to list all processes running, and then the Linux `kill` command to kill the two Node.js processes.
-
-
 #### Importing the Application
 If the students get stuck, point them to the ACR documentation:
 
 - https://docs.microsoft.com/en-us/azure/container-registry/container-registry-import-images
 
-### Other tips / tricks
+### Step 0: Set up variables
+```bash
+RESOURCE_GROUP="rg-westeurope-akstraining-01"
+ACR_NAME="acrakstraining01.azurecr.io"
+LOCATION="westeurope"
+```
 
-- To create the registry from the CLI, use: 
-    - `az acr create -n <name of registry> -g <resource group> --sku Standard`
-- To login to the ACR, use: 
-    - `az acr login --name <name of ACR>`
-- To list images in the repository, use:
-    - `az acr repository list --name <name of ACR>`
+### Step 1: Create the Azure Container Registry
+
+First, create a resource group (if not already created) and the ACR:
+
+```bash
+# Create ACR with Standard SKU
+az acr create --resource-group $RESOURCE_GROUP --name $ACR_NAME --sku Standard
+
+# Enable admin user (optional, for basic authentication)
+az acr update --name $ACR_NAME --admin-enabled true
+
+# Get admin credentials (if admin user is enabled)
+az acr credential show --name $ACR_NAME
+```
+
+**Alternative: Create a token-based user for more granular access control:**
+
+```bash
+# Create a token for user 'myuser' with content read/write permissions
+az acr token create --name myuser --registry $ACR_NAME --scope-map _repositories_admin
+```
+
+### Step 2: Pull images from Docker Hub
+```bash
+sudo docker pull whatthehackmsft/content-api:latest
+sudo docker pull whatthehackmsft/content-web:latest
+```
+
+### Step 3: Tag images for ACR
+```bash
+sudo docker image tag whatthehackmsft/content-api:latest $ACR_NAME/whatthehackmsft/content-api:latest
+sudo docker image tag whatthehackmsft/content-web:latest $ACR_NAME/whatthehackmsft/content-web:latest
+```
+
+### Step 4: Login to ACR
+```bash
+sudo az acr login -n $ACR_NAME
+```
+
+### Step 5: Push images to ACR
+```bash
+ACR_NAME="acrakstraining01.azurecr.io"
+docker image push $ACR_NAME/whatthehackmsft/content-api:latest
+docker image push $ACR_NAME/whatthehackmsft/content-web:latest
+```
+
+### Verify images
+```bash
+az acr repository list --name $ACR_NAME
+docker images
+```
+
+**Note:** If running commands requiring Docker daemon access, you may need to use `sudo` or add your user to the docker group.
+
+

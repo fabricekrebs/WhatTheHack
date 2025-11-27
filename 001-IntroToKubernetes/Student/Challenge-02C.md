@@ -19,6 +19,10 @@ You can use Azure container registries with your existing container development 
   - **Web app:** `whatthehackmsft/content-web`
 - List all images in your ACR
 
+## Hints
+
+- If you prefer, you can pull the images locally using `docker pull` and then push them to your Azure Container Registry instead of using the ACR import command.
+
 ## Success Criteria
 
 1. Verify that you have provisioned a new Azure Container Registry

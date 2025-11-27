@@ -57,6 +57,9 @@ echo "source <(kubectl completion bash)" >> ~/.profile
 echo "alias k=kubectl" >> ~/.profile
 echo "complete -o default -F __start_kubectl k" >> ~/.profile
 
+# Add current user to docker group
+sudo usermod -aG docker $USER
+
 # Final upgrade and cleanup
 sudo NEEDRESTART_MODE=l apt-get dist-upgrade -y
 sudo apt autoremove -y
