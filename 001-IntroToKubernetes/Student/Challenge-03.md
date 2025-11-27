@@ -16,9 +16,11 @@ In this challenge we will be provisioning our first Kubernetes cluster using the
 	- Use the default Kubernetes version used by AKS.
 	- The cluster should use Azure CNI Overlay.  
 	- The cluster should use a managed identity
+	- You can use the Node SKU D2ls_v5 and the location France Central
 	- The cluster should use the maximum number of Availability Zones for improved worker node reliability.
 	- The cluster should attach to your ACR created in Challenge 2 (if you didn't do Challenge 2, you don't need to attach to anything).
       - **NOTE:** Attaching an ACR requires you to have "Owner" or "Azure account administrator" role on the Azure subscription. If this is not possible then someone who is an Owner can do the attach for you after you create the cluster.
+      - **NOTE:** Attaching an ACR requires you to not give the FQDN of the ACR but just the short name.
     - **NOTE:** You will need to specify on the command line if you want ssh keys generated or no ssh keys used. Either option will work, but you should read the documentation and be familiar with the difference.
 
 Once the cluster is running:

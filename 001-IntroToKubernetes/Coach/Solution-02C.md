@@ -8,9 +8,6 @@ This is **PATH C**: Use this path if your students understand docker, don't care
 
 ## Notes & Guidance
 
-#### Tooling:
-The students will need to be able to run the Azure cli.  Ideally this would be run from their local workstation, but it could also be the Azure Cloud Shell.
-
 #### Importing the Application
 If the students get stuck, point them to the ACR documentation:
 
